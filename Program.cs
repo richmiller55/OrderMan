@@ -60,7 +60,7 @@ namespace OrderMan
                 sessionModClient.Endpoint.Behaviors.Add(new HookServiceBehavior(sessionId, epicorUserID));
                 salesOrderClient.Endpoint.Behaviors.Add(new HookServiceBehavior(sessionId, epicorUserID));
 
-                string dirName = @"Z:\e10\EDI_Data\orderAdj";
+                string dirName = @"x:\data\OrderAdj";
                 string[] filePaths = Directory.GetFiles(dirName);
                 
                 foreach (string fileName in filePaths)
@@ -163,9 +163,10 @@ namespace OrderMan
             if (ts != null)
             {
                 result += strOrderNum;
-                var DtlRow = ts.OrderDtl.Where(n => n.PartNum.Equals("757026287334", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                DtlRow.RevisionNum = "PCK";    
-                
+                var DtlRow = ts.OrderDtl.Where(n => n.PartNum.Equals("757026283381", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                DtlRow.OrderQty = System.Convert.ToDecimal( split[(int)layout.qty]) * 24;
+                DtlRow.SellingQuantity = System.Convert.ToDecimal(split[(int)layout.qty]);
+                DtlRow.SellingFactor = 24;
                 DtlRow.RowMod = "U";
                 try
                 {
